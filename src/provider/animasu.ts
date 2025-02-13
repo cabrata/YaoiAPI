@@ -126,7 +126,7 @@ async function getAnime(
       callGetAnimeDetail({
         provider: Provider.ANIMASU,
         anime: cachedData,
-      })
+      });
       return cachedData;
     }
     const res = await axios.get(`${BASE_URL}/anime/${slug}/`);
@@ -139,7 +139,10 @@ async function getAnime(
     const title = infox.find("h1[itemprop='headline']").text().trim();
     const synonym = infox.find(".alter").text().trim();
     const synopsis = $(".sinopsis p").text().trim();
-    const image = $(".bigcontent .thumb img").attr("data-src") || "";
+    let image = $(".bigcontent .thumb img").attr("src") || "";
+    if(!image.includes("http")){
+      image = `https:${image}`
+    }
     const rating = $(".rating strong").text().trim() || "N/A";
 
     const trailer = $(".trailer iframe").attr("src")?.trim() || "";
@@ -647,6 +650,43 @@ export async function getAnimesByAlphabet(
   }
 }
 
+// async function getNewUpdate(): Promise<AnimeDetail | undefined> {
+//   try {
+//     const resCbox = await axios.get(
+//       `https://www5.cbox.ws/box/?boxid=946129&boxtag=dHK21Z`
+//     );
+//     const $ = cheerio.load(resCbox.data);
+//     let messagers = $(".msg");
+//     const el = messagers.get(messagers.length - 1);
+//     const $$ = $(el);
+//     const isBot = $$.find(".nme").text().trim() === "Bot Animasu";
+//     const isUpdate = $$.find(".body").text().trim().includes("Update:");
+
+//     if (isBot && isUpdate) {
+//       const epsUrl = $$.find(".body a").attr("href");
+//       const epsSlug = epsUrl?.split("/")[3];
+
+//       const 
+//       if(epsSlug?.includes("-episode-")){
+
+//       }
+
+//       const animeSlug = epsSlug?.split("-episode-")[0].replace("nonton-", "");
+
+//       if(animeSlug && epsSlug){
+//         const anime = await getAnime(animeSlug || "");
+
+        
+//       }
+//     }     
+//     // const lastMessage = messagers.get(messagers.length - 1);
+//     // console.log($(lastMessage).text().trim());
+//   } catch (error) {
+//     console.error("Error saat mengambil data anime:", error);
+//     return;
+//   }
+// }
+
 export default {
   getAnimes,
   getAnime,
@@ -656,4 +696,5 @@ export default {
   getAnimesByDay,
   getScheduleAnimes,
   getAnimesByAlphabet,
+  // getNewUpdate,
 };
