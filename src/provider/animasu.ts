@@ -595,7 +595,7 @@ export async function getAnimesByAlphabet(
       const $$ = $(el);
 
       // Extract image data
-      const image = $$.find(".imgx img")?.attr("data-src")?.trim() || "";
+      const image = $$.find(".imgx > a > img")?.attr("src")?.trim() || "";
 
       // Extract title and slug
       const title = $$.find(".inx h2 a").text().trim();
