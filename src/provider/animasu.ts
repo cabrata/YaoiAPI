@@ -17,7 +17,7 @@ import * as cheerio from "cheerio";
 import cache from "../cache";
 import { callGetAnimeDetail, callGetAnimes } from "../event/event";
 const PREFIX_CACHE = "animasu";
-const BASE_URL = process.env.ANIMASU_BASE_URL || "https://v9.animasu.cc";
+const BASE_URL = process.env.ANIMASU_BASE_URL || "https://v0.animasu.app/";
 
 async function getAnimes(
   params?: AnimesParams,
